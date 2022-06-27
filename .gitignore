@@ -1,0 +1,8 @@
+.ipynb_checkpoints/
+API_KEY.txt
+humio-config.json
+floorplans/
+venv/
+events/
+move_events.json
+__pycache__/

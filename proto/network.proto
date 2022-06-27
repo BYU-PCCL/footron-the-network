@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+// Unreal C++ requirements
+// - network.pb.cc and network.pb.h need the these lines placed near the beginning of the file:
+//   ```
+//   #pragma warning (disable : 4125)
+//   #pragma warning (disable : 4800)
+//   ```
+// - network.grpc.pb.h and network.grpc.pb.cc need to have their block of #include <grpcpp/...> statements sandwiched like so:
+//   ```
+//   #include "GrpcIncludesBegin.h"
+//   ...
+//   #include "GrpcIncludesEnd.h"
+//   ```
+
+package thenetwork;
+
+service TheNetwork {
+  rpc GetAlignment (FrameRequest) returns (Alignment) {}
+  rpc GetNetworkMovements (FrameRequest) returns (NetworkMovements) {}
+}
+
+message FrameRequest {
+  int64 timestamp = 1;
+}
+
+message Position {
+  double x = 1;
+  double y = 2;
+  double z = 3;
+}
+
+message AlignmentBbox {
+  Position ne = 1;
+  Position sw = 2;
+}
+
+message Room {
+  Position position = 1;
+}
+
+message NetworkMovement {
+  Position start = 1;
+  Position end = 2;
+}
+
+message Alignment {
+  AlignmentBbox bbox = 1;
+  map<string, Room> rooms = 2;
+}
+
+message NetworkMovements {
+  repeated NetworkMovement movements = 1;
+}
